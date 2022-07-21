@@ -26,5 +26,13 @@ namespace RestaurantServiceWebAPI.Controllers
             var menu = await _db.Menus.FindAsync(id);
             return menu == null ? NotFound() : Ok(menu);
         }
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> Create(Menu menu)
+        {
+            await _db.Menus.AddAsync(menu);
+            await _db.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetById), new { id = menu.Id }, menu);
+        }
     }
 }
