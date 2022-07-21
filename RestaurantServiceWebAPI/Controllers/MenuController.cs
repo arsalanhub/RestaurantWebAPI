@@ -18,5 +18,13 @@ namespace RestaurantServiceWebAPI.Controllers
         }
         [HttpGet]
         public async Task<IEnumerable<Menu>> Get() => await _db.Menus.ToListAsync();
+        [HttpGet("id")]
+        [ProducesResponseType(typeof(Menu), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var menu = await _db.Menus.FindAsync(id);
+            return menu == null ? NotFound() : Ok(menu);
+        }
     }
 }
