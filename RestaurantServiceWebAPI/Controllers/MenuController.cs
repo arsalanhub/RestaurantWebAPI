@@ -18,7 +18,7 @@ namespace RestaurantServiceWebAPI.Controllers
         }
         [HttpGet]
         public async Task<IEnumerable<Menu>> Get() => await _db.Menus.ToListAsync();
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         [ProducesResponseType(typeof(Menu), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
@@ -33,6 +33,16 @@ namespace RestaurantServiceWebAPI.Controllers
             await _db.Menus.AddAsync(menu);
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = menu.Id }, menu);
+        }
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update(int id, Menu menu)
+        {
+            if (id != menu.Id) return BadRequest();
+            _db.Entry(menu).State = EntityState.Modified;   
+            await _db.SaveChangesAsync();
+            return NoContent();
         }
     }
 }
