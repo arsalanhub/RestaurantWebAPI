@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantServiceWebAPI.Data;
@@ -16,8 +17,10 @@ namespace RestaurantServiceWebAPI.Controllers
         {
             _db = db;
         }
+
         [HttpGet]
         public async Task<IEnumerable<Menu>> Get() => await _db.Menus.ToListAsync();
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Menu), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -26,24 +29,32 @@ namespace RestaurantServiceWebAPI.Controllers
             var menu = await _db.Menus.FindAsync(id);
             return menu == null ? NotFound() : Ok(menu);
         }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Create(Menu menu)
+        public async Task<IActionResult> Create([FromForm] Menu menu)
         {
             await _db.Menus.AddAsync(menu);
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = menu.Id }, menu);
         }
+
+        private Menu Json(Menu menu)
+        {
+            throw new NotImplementedException();
+        }
+
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(int id, Menu menu)
+        public async Task<IActionResult> Update(int id, [FromForm] Menu menu)
         {
             if (id != menu.Id) return BadRequest();
             _db.Entry(menu).State = EntityState.Modified;   
             await _db.SaveChangesAsync();
             return NoContent();
         }
+
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
