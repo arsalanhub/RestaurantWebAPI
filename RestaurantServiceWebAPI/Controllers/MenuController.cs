@@ -57,11 +57,10 @@ namespace RestaurantServiceWebAPI.Controllers
         }
 
         // POST
-        [Route("api/{controller}/update/{id}")]
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [Route("api/{controller}/{id}")]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Update(int id, Menu menu)
+        public async Task<IActionResult> Update([FromBody] Menu menu)
         {
             //if (id != menu.Id) return BadRequest();
             /*_db.Entry(menu).State = EntityState.Modified;*/   
