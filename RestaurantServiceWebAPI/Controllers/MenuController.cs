@@ -70,7 +70,7 @@ namespace RestaurantServiceWebAPI.Controllers
         }
 
         // POST
-        [HttpDelete("{id}")]
+        [HttpDelete("api/{controller}/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)

@@ -12,7 +12,9 @@ builder.Services.AddCors(options =>
                       policy =>
                       {
                           policy.WithOrigins("https://localhost:7157",
-                                              "https://localhost:7157");
+                                              "https://localhost:7157")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
                       });
 });
 
@@ -38,7 +40,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(builder =>
+{
+    builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+});
 
 app.UseAuthorization();
 
