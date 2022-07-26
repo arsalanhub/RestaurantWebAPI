@@ -33,5 +33,21 @@ namespace RestaurantServiceWebAPI.Controllers
             await _db.SaveChangesAsync();
             return NoContent();
         }
+
+        // POST
+        [Route("api/{controller}")]
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create([FromBody] Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                await _db.categories.AddAsync(category);
+                await _db.SaveChangesAsync();
+                return NoContent();
+            }
+            return NoContent();
+        }
     }
     }
