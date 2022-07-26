@@ -39,7 +39,7 @@ namespace RestaurantServiceWebAPI.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create([FromForm] Menu menu)
+        public async Task<IActionResult> Create([FromBody] Menu menu)
         {
             if(ModelState.IsValid)
             {

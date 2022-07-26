@@ -9,6 +9,7 @@ namespace RestaurantServiceWebAPI.Data
         {
         }
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<Category> categories { get; set; }
 
         public static implicit operator ApplicationDbContext(ApplicationBuilder v)
         {
