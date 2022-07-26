@@ -49,5 +49,18 @@ namespace RestaurantServiceWebAPI.Controllers
             }
             return NoContent();
         }
+
+        // DELETE
+        [HttpDelete("api/{controller}/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var categoryToDelete = await _db.categories.FindAsync(id);
+            if (categoryToDelete == null) return NotFound();
+            _db.categories.Remove(categoryToDelete);
+            await _db.SaveChangesAsync();
+            return NotFound();
+        }
     }
     }

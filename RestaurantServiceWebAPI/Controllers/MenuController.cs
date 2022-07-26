@@ -68,7 +68,7 @@ namespace RestaurantServiceWebAPI.Controllers
             return NoContent();
         }
 
-        // POST
+        // DELETE
         [HttpDelete("api/{controller}/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
