@@ -48,7 +48,6 @@ namespace RestaurantServiceWebAPI.Controllers
                 return NoContent();
             }
             return NoContent();
-            // return CreatedAtAction(nameof(GetById), new { id = menu.Id }, menu);
         }
 
         private Menu Json(Menu menu)
@@ -56,7 +55,7 @@ namespace RestaurantServiceWebAPI.Controllers
             throw new NotImplementedException();
         }
 
-        // POST
+        // PUT
         [Route("api/{controller}/{id}")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
